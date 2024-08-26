@@ -1,0 +1,50 @@
+node_modules
+/.idea
+/.fleet
+/.vscode
+dist
+/build
+/coverage
+./test
+.DS_Store
+tmp
+*.log
+jest.debug.config.js
+.tool-versions
+/.nx-cache
+/.nx
+
+# Android
+apps/mobile/android/app/build/
+apps/mobile/android/build/
+
+# iOS
+apps/mobile/ios/build/
+apps/mobile/ios/Pods/
+apps/mobile/ios/Podfile.lock
+
+# We don't commit a CHANELGELOG.md file to the repo, we only create Github releases
+CHANGELOG.md
+
+# Local dev files
+.env.local
+.bashrc
+.nx
+
+*.node
+
+# Fix for issue when working on the repo in a dev container
+.pnpm-store
+.nx/cache
+.nx/workspace-data
+
+.cargo/.package-cache
+.cargo/bin/
+.cargo/env
+.cargo/registry/
+.local/
+.npm/
+.profile
+.rustup/
+target
+*.wasm

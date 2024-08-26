@@ -1,0 +1,9 @@
+{
+  "name": "jafa-ui",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/jafa-ui/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project jafa-ui --web",
+  "targets": {}
+}

@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "@jafa/jafa-ui": ["libs/jafa-ui/src/index.ts"]
+      "@jafa/jafa-ui": ["./libs/jafa-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

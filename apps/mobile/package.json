@@ -18,6 +18,8 @@
     "react-native-gesture-handler": "*",
     "@react-navigation/native-stack": "*",
     "@react-navigation/native-tabs": "*",
-    "@react-navigation/native": "*"
+    "@react-navigation/native": "*",
+    "react-native-picker-select": "*",
+    "@babel/plugin-transform-private-methods": "*"
   }
 }

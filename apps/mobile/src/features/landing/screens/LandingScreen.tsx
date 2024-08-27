@@ -6,9 +6,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LoginForm } from '../components/LoginForm/LoginForm';
 import { LoggedOutStackParamList } from '../../../common/navigation/types/NavigationParamLists';
 import { ScreenComponent } from '../../../common/layout/ScreenComponent/ScreenComponent';
-import { ButtonComponent } from '../../../common/button/ButtonComponent';
+import { ButtonComponent } from '../../../../../../libs/jafa-ui/src/components/button/ButtonComponent';
 import { SpacerComponent } from '../../../common/spacer/SpacerComponent';
-import { Title2Component } from '../../../common/typography/title2/Title2Component';
+import { Title2Component } from '../../../../../../libs/jafa-ui/src/components/typography/title2/Title2Component';
 
 type NavigationProps = NativeStackNavigationProp<LoggedOutStackParamList>;
 

@@ -1,6 +1,7 @@
 export type LoggedOutStackParamList = {
   Landing: undefined;
   SignUp: undefined;
+  LoggedInNavigator: undefined;
 };
 
 export type LoggedInStackParamList = {

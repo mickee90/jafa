@@ -15,12 +15,14 @@
     "glob": "7.2.0"
   },
   "dependencies": {
+    "@babel/plugin-transform-private-methods": "^7.25.4",
     "@emotion/native": "^11.11.0",
     "@emotion/react": "^11.11.4",
     "@gorhom/bottom-sheet": "^4.6.3",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@reduxjs/toolkit": "^2.2.7",
     "date-fns": "^3.6.0",
     "glob": "^7.2.0",
     "react": "18.2.0",
@@ -34,6 +36,7 @@
     "react-native-safe-area-context": "^4.10.5",
     "react-native-screens": "^3.32.0",
     "react-native-vector-icons": "^10.1.0",
+    "react-redux": "^9.1.2",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

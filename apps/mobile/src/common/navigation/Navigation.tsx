@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -12,12 +12,13 @@ import {
   LoggedInStackParamList,
   LoggedOutStackParamList,
 } from './types/NavigationParamLists';
-import WorkoutScreen from '../../features/workout/screens/WorkoutScreen';
+// import WorkoutScreen from '../../features/workout/screens/WorkoutScreen';
 import { ChooseExcerciseScreen } from '../../features/workout/screens/ChooseExcerciseScreen';
+import { isLoggedIn } from '../../features/auth/ducks/authSelectors';
+import { useAppSelector } from '../../store/store';
 
 export const Navigation = () => {
-  const [isAuth] = useState(false);
-  // const [isAuth, setIsAuth] = useState(false);
+  const isAuth = useAppSelector(isLoggedIn);
 
   const LoggedOutStack = createNativeStackNavigator<LoggedOutStackParamList>();
   const LoggedInStack = createBottomTabNavigator<LoggedInStackParamList>();

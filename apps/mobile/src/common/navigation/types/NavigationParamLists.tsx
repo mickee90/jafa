@@ -11,5 +11,5 @@ export type LoggedInStackParamList = {
   StartNewWorkout: undefined;
   ChooseExcercise: undefined;
   Programs: undefined;
-  Profile: undefined;
+  Settings: undefined;
 };

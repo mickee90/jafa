@@ -4,8 +4,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LoggedInStackParamList } from '../../../../common/navigation/types/NavigationParamLists';
-import { Dropdown } from '../../../../common/dropdown/Dropdown';
-import { RadioButton } from '../../../../common/radioButton/RadioButton';
+import { Dropdown, RadioButton } from '@jafa/jafa-ui';
 
 type NavigationProps = NativeStackNavigationProp<LoggedInStackParamList>;
 

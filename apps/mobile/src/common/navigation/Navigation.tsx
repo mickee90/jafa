@@ -7,7 +7,7 @@ import { SignUpScreen } from '../../features/signUp/screens/SignUpScreen';
 import { HomeScreen } from '../../features/home/screens/HomeScreen';
 import { StatisticsScreen } from '../../features/statistics/screens/StatisticsScreen';
 import { ProgramsScreen } from '../../features/programs/screens/ProgramsScreen';
-import { ProfileScreen } from '../../features/profile/screens/ProfileScreen';
+import { SettingsScreen } from '../../features/settings/screens/SettingsScreen';
 import {
   LoggedInStackParamList,
   LoggedOutStackParamList,
@@ -24,15 +24,25 @@ export const Navigation = () => {
   const LoggedInStack = createBottomTabNavigator<LoggedInStackParamList>();
 
   const LoggedOutNavigator = () => (
-    <LoggedOutStack.Navigator initialRouteName="Landing">
+    <LoggedOutStack.Navigator
+      initialRouteName="Landing"
+      screenOptions={{ headerShown: false }}
+    >
       <LoggedOutStack.Screen name="Landing" component={LandingScreen} />
       <LoggedOutStack.Screen name="SignUp" component={SignUpScreen} />
     </LoggedOutStack.Navigator>
   );
 
   const LoggedInNavigator = () => (
-    <LoggedInStack.Navigator initialRouteName="Home">
-      <LoggedInStack.Screen name="Home" component={HomeScreen} />
+    <LoggedInStack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
+      <LoggedInStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
       <LoggedInStack.Screen name="Statistics" component={StatisticsScreen} />
       {/* <LoggedInStack.Screen name="CreateWorkout" component={WorkoutScreen} /> */}
       {/* <LoggedInStack.Screen name="StartNewWorkout" component={WorkoutScreen} /> */}
@@ -41,7 +51,7 @@ export const Navigation = () => {
         component={ChooseExcerciseScreen}
       />
       <LoggedInStack.Screen name="Programs" component={ProgramsScreen} />
-      <LoggedInStack.Screen name="Profile" component={ProfileScreen} />
+      <LoggedInStack.Screen name="Settings" component={SettingsScreen} />
     </LoggedInStack.Navigator>
   );
 

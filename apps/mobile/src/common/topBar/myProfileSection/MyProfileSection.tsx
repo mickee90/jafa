@@ -25,7 +25,7 @@ const Container = styled.View`
 const Section = styled.View`
   flex: 1;
   flex-direction: row;
-  gap: 8;
+  gap: 8px;
   align-items: center;
 `;
 

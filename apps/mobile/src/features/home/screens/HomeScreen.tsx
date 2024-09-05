@@ -1,5 +1,10 @@
-import { TopBar } from '../../../common/topBar/TopBar';
+import { ScreenComponent } from '@jafa/jafa-ui';
+import { Overview } from '../components/Overview';
 
 export const HomeScreen = () => {
-  return <TopBar />;
+  return (
+    <ScreenComponent>
+      <Overview />
+    </ScreenComponent>
+  );
 };

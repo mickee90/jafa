@@ -8,7 +8,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "pods": "cd ios && bundle install && bundle exec pod install",
-    "lint": "eslint . --fix"
+    "lint": "eslint --fix"
   },
   "private": true,
   "resolutions": {

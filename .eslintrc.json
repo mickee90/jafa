@@ -9,6 +9,7 @@
         "@nx/enforce-module-boundaries": [
           "error",
           {
+            "allowCircularSelfDependency": true,
             "enforceBuildableLibDependency": true,
             "allow": [],
             "depConstraints": [
@@ -32,4 +33,22 @@
       "rules": {}
     }
   ]
+  // "rules": {
+  //   "@nx/enforce-module-boundaries": [
+  //     "error",
+  //     {
+  //       "allow": [],
+  //       "depConstraints": [
+  //         {
+  //           "sourceTag": "scope:shared",
+  //           "onlyDependOnLibsWithTags": ["scope:shared"]
+  //         },
+  //         {
+  //           "sourceTag": "scope:client",
+  //           "onlyDependOnLibsWithTags": ["scope:shared"]
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
 }

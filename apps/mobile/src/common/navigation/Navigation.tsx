@@ -16,6 +16,7 @@ import {
 import { ChooseExcerciseScreen } from '../../features/workout/screens/ChooseExcerciseScreen';
 import { isLoggedIn } from '../../features/auth/ducks/authSelectors';
 import { useAppSelector } from '../../store/store';
+import { TopBar } from '../topBar/TopBar';
 
 export const Navigation = () => {
   const isAuth = useAppSelector(isLoggedIn);
@@ -36,12 +37,12 @@ export const Navigation = () => {
   const LoggedInNavigator = () => (
     <LoggedInStack.Navigator
       initialRouteName="Home"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ header: () => <TopBar /> }}
     >
       <LoggedInStack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
       <LoggedInStack.Screen name="Statistics" component={StatisticsScreen} />
       {/* <LoggedInStack.Screen name="CreateWorkout" component={WorkoutScreen} /> */}

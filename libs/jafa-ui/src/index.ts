@@ -1,4 +1,5 @@
 export * from './components/button/ButtonComponent';
+export * from './components/cards';
 export * from './components/dropdown/Dropdown';
 export * from './components/input/InputComponent';
 export * from './components/radioButton/RadioButton';

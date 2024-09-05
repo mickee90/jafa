@@ -20,6 +20,7 @@ const Container = styled.View`
   border-bottom: 1px;
   border-bottom-color: #333;
   border-bottom-width: 1px;
+  padding-horizontal: 20px;
 `;
 
 const BodyMeasurements = styled.Text`

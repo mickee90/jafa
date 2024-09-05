@@ -18,11 +18,15 @@ export const FilterCard = ({ title, children }: Props) => {
     <Dropdown
       label="The last 7 days"
       options={[
-        { label: '7 days', value: FilterValues['7_days'] },
-        { label: '14 days', value: FilterValues['14_days'] },
-        { label: '30 days', value: FilterValues['30_days'] },
+        { label: 'The last 7 days', value: FilterValues['7_days'] },
+        { label: 'The last 14 days', value: FilterValues['14_days'] },
+        { label: 'The last 30 days', value: FilterValues['30_days'] },
         { label: 'Max', value: FilterValues['max'] },
       ]}
+      defaultOption={{
+        label: 'The last 7 days',
+        value: FilterValues['7_days'],
+      }}
     />
   );
 

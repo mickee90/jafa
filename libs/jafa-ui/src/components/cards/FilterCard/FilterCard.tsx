@@ -16,7 +16,6 @@ export enum FilterValues {
 export const FilterCard = ({ title, children }: Props) => {
   const filterDropdown = () => (
     <Dropdown
-      label="The last 7 days"
       options={[
         { label: 'The last 7 days', value: FilterValues['7_days'] },
         { label: 'The last 14 days', value: FilterValues['14_days'] },

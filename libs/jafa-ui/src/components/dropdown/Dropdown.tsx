@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { View } from 'react-native';
-import styled from '@emotion/native';
 
 type Props = {
-  label?: string;
   options: Option[];
   defaultOption: Option;
 };
@@ -19,15 +17,18 @@ const placeholderFallback = {
   value: '',
 };
 
-export const Dropdown = ({ label, options, defaultOption }: Props) => {
+export const Dropdown = ({ options, defaultOption }: Props) => {
   const [value, setValue] = useState<string | undefined>(defaultOption.value);
-  const [allOptions, setAllOptions] = useState<Option[]>([placeholderFallback]);
 
-  useEffect(() => {
-    // setSelectedValue(defaultOption.value);
-
-    setAllOptions([placeholderFallback, ...options]);
-  }, []);
+  const allOptions = [placeholderFallback, ...options].map((option) => {
+    return (
+      <Picker.Item
+        label={option.label}
+        value={option.value}
+        key={option.value}
+      />
+    );
+  });
 
   return (
     <View>
@@ -37,21 +38,8 @@ export const Dropdown = ({ label, options, defaultOption }: Props) => {
         selectedValue={value}
         key={value}
       >
-        {allOptions.map((option) => (
-          <Picker.Item
-            label={option.label}
-            value={option.value}
-            key={option.value}
-          />
-        ))}
+        {allOptions}
       </Picker>
-      {value && <HiddenText>Selected: {value}</HiddenText>}
     </View>
   );
 };
-
-// TODO: remove hack
-const HiddenText = styled.Text`
-  color: transparent;
-  font-size: 1;
-`;

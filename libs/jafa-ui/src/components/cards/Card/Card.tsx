@@ -61,11 +61,13 @@ const CardHeader = styled.View`
   justify-content: space-between;
   border-bottom-color: #000;
   border-bottom-width: 1;
+  background-color: #999;
 `;
 
 const CardBody = styled.View`
   border-bottom-color: #000;
   border-bottom-width: 1;
+  background-color: #999;
 `;
 
 const Link = styled.Text`

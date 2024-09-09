@@ -1,3 +1,5 @@
+import { Text } from 'react-native';
+
 export const ProgramsScreen = () => {
-  return <></>;
+  return <Text>Program Screen</Text>;
 };

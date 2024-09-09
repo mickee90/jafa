@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Button, Alert, Text } from 'react-native';
-import { AddExcerciseCard } from '../components/AddExcerciseCard/AddExcerciseCard';
+import { AddExerciseCard } from '../components/AddExerciseCard/AddExerciseCard';
 
-export type ExcerciseSet = {
+export type ExerciseSet = {
   setNumber: number;
   weight: number;
   reps: number;
 };
 
-export type Excercise = {
+export type Exercise = {
   id: string;
   name: string;
 };
 
-export type WorkoutExcerciseGroup = {
-  excercise: Excercise;
-  sets: ExcerciseSet[];
+export type WorkoutExerciseGroup = {
+  exercise: Exercise;
+  sets: ExerciseSet[];
 };
 
 export const StartNewWorkoutScreen = () => {
-  const [isAddingExcercise, setIsAddingExcercise] = useState(false);
-  const [excercise, setExcercise] = useState<Excercise>({
+  const [isAddingExercise, setIsAddingExercise] = useState(false);
+  const [exercise, setExercise] = useState<Exercise>({
     id: '12345',
     name: 'Bench press',
   });
-  const [workoutExcerciseGroups, setWorkoutExcerciseGroups] = useState<
-    WorkoutExcerciseGroup[]
+  const [workoutExerciseGroups, setWorkoutExerciseGroups] = useState<
+    WorkoutExerciseGroup[]
   >([]);
 
-  const onAddExcercise = (workoutExcerciseGroup: WorkoutExcerciseGroup) => {
-    setWorkoutExcerciseGroups(
-      (workoutExcerciseGroups: WorkoutExcerciseGroup[]) => [
-        ...workoutExcerciseGroups,
-        workoutExcerciseGroup,
+  const onAddExercise = (workoutExerciseGroup: WorkoutExerciseGroup) => {
+    setWorkoutExerciseGroups(
+      (workoutExerciseGroups: WorkoutExerciseGroup[]) => [
+        ...workoutExerciseGroups,
+        workoutExerciseGroup,
       ]
     );
   };
@@ -45,8 +45,8 @@ export const StartNewWorkoutScreen = () => {
     Alert.alert('Done!');
   };
 
-  const onExcercisePress = () => {
-    Alert.alert('Add Excercise!');
+  const onExercisePress = () => {
+    Alert.alert('Add Exercise!');
   };
 
   const onSpecialSetPress = () => {
@@ -62,14 +62,11 @@ export const StartNewWorkoutScreen = () => {
           <Button title="Done" onPress={onDonePress} />
         </View>
       </View>
-      {isAddingExcercise && (
-        <AddExcerciseCard
-          excercise={excercise}
-          onAddExcercise={onAddExcercise}
-        />
+      {isAddingExercise && (
+        <AddExerciseCard exercise={exercise} onAddExercise={onAddExercise} />
       )}
       <View style={styles.row}>
-        <Button title="+ Exercise" onPress={onExcercisePress} />
+        <Button title="+ Exercise" onPress={onExercisePress} />
         <Button title="+ Special Set" onPress={onSpecialSetPress} />
       </View>
       <View>

@@ -9,7 +9,7 @@
     "start": "react-native start",
     "pods": "cd ios && bundle install && bundle exec pod install",
     "lint": "eslint --fix",
-    "prepare": "husky"
+    "prepare": "node .husky/install.mjs" 
   },
   "private": true,
   "resolutions": {

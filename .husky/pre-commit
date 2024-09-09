@@ -1,1 +1,1 @@
-nx run mobile:lint
+nx run-many --target=lint --skip-nx-cache --verbose

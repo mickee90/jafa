@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { View, Button, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import {
-  Excercise,
-  ExcerciseSet,
-  WorkoutExcerciseGroup,
+  Exercise,
+  ExerciseSet,
+  WorkoutExerciseGroup,
 } from '../../screens/StartNewWorkoutScreen';
 
 type Props = {
-  excercise: Excercise;
-  onAddExcercise: (workoutExcerciseGroup: WorkoutExcerciseGroup) => void;
+  exercise: Exercise;
+  onAddExercise: (workoutExerciseGroup: WorkoutExerciseGroup) => void;
 };
 
-export const AddExcerciseCard = ({ excercise, onAddExcercise }: Props) => {
-  const [sets, setSets] = useState<ExcerciseSet[]>([]);
+export const AddExerciseCard = ({ exercise, onAddExercise }: Props) => {
+  const [sets, setSets] = useState<ExerciseSet[]>([]);
 
   return (
     <View style={styles.card}>
@@ -49,7 +49,7 @@ export const AddExcerciseCard = ({ excercise, onAddExcercise }: Props) => {
         <TouchableOpacity>
           <Button
             title="Done"
-            onPress={() => onAddExcercise({ excercise, sets })}
+            onPress={() => onAddExercise({ exercise, sets })}
           />
         </TouchableOpacity>
       </View>

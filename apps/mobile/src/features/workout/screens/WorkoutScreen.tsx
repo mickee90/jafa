@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { LoggedInStackParamList } from '../../../common/navigation/types/NavigationParamLists';
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import { LoggedInStackParamList } from '../../../common/navigation/types/NavigationParamLists';
 
-type NavigationProps = NativeStackNavigationProp<LoggedInStackParamList>;
+// type NavigationProps = NativeStackNavigationProp<LoggedInStackParamList>;
 
 export default function WorkoutScreen() {
-  const navigation = useNavigation<NavigationProps>();
+  // const navigation = useNavigation<NavigationProps>();
   const bottomSheetRef = useRef(null);
 
   const snapPoints = ['25%', '50%'];

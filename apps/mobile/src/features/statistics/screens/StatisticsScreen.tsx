@@ -1,3 +1,5 @@
+import { Text } from 'react-native';
+
 export const StatisticsScreen = () => {
-  return <></>;
+  return <Text>Statistics Screen</Text>;
 };

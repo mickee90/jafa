@@ -1,16 +1,17 @@
 import { Text } from 'react-native';
 import styled from '@emotion/native';
+import { Paragraph } from '@jafa/jafa-ui';
 
 export const MyProfileSection = () => {
   return (
     <Container>
       <Section>
         <Avatar>
-          <Text>Avatar</Text>
+          <Paragraph>Avatar</Paragraph>
         </Avatar>
         <NameUsername>
-          <Text>Mikael Nisson</Text>
-          <Text>@micke</Text>
+          <Paragraph>Mikael Nisson</Paragraph>
+          <Paragraph>@micke</Paragraph>
         </NameUsername>
       </Section>
     </Container>

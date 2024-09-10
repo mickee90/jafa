@@ -5,11 +5,13 @@ export type LoggedOutStackParamList = {
 };
 
 export type LoggedInStackParamList = {
+  Main: undefined;
   Home: undefined;
   Statistics: undefined;
+  Workout: undefined;
   CreateWorkout: undefined;
   StartNewWorkout: undefined;
-  ChooseExcercise: undefined;
+  ChooseExercise: undefined;
   Programs: undefined;
   Settings: undefined;
 };

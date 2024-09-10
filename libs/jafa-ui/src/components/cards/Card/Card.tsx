@@ -1,5 +1,6 @@
 import styled from '@emotion/native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import { Title6Component } from '../../typography';
 
 type Props = {
   title: string;
@@ -18,7 +19,7 @@ export const Card = ({ title, headerRight, children }: Props) => {
       <CardHeader>
         <Row>
           <View>
-            <Text>{title}</Text>
+            <Title6Component title={title} />
           </View>
           <View>{headerRight}</View>
         </Row>
@@ -36,7 +37,7 @@ export const Card = ({ title, headerRight, children }: Props) => {
         {/* <TouchableOpacity>
           <Button
             title="Done"
-            onPress={() => onAddExcercise({ excercise, sets })}
+            onPress={() => onAddExercise({ excercise, sets })}
           /> */}
         {/* </TouchableOpacity> */}
       </Row>
@@ -47,13 +48,13 @@ export const Card = ({ title, headerRight, children }: Props) => {
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 `;
 
 const CardStyles = styled.View`
-  background-color: #999;
   border-radius: 10;
-  color: #fff;
+  padding-horizontal: 8px;
 `;
 
 const CardHeader = styled.View`
@@ -61,16 +62,19 @@ const CardHeader = styled.View`
   justify-content: space-between;
   border-bottom-color: #000;
   border-bottom-width: 1;
-  background-color: #999;
+  padding-horizontal: 8px;
 `;
 
 const CardBody = styled.View`
   border-bottom-color: #000;
   border-bottom-width: 1;
-  background-color: #999;
+  background-color: #172234;
+  padding-horizontal: 8px;
+  padding-vertical: 16px;
+  border-radius: 8px;
 `;
 
-const Link = styled.Text`
-  color: red;
-  text-decoration-line: underline;
-`;
+// const Link = styled.Text`
+//   color: red;
+//   text-decoration-line: underline;
+// `;

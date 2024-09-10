@@ -1,6 +1,6 @@
+import { View } from 'react-native';
 import styled from '@emotion/native';
-import { FilterCard } from '@jafa/jafa-ui';
-import { View, Text } from 'react-native';
+import { FilterCard, Paragraph } from '@jafa/jafa-ui';
 
 /**
  * TODO:
@@ -14,31 +14,37 @@ export const Overview = () => {
       <FilterCard title="Overview">
         <View>
           <View>
-            <Text>insert Graph...</Text>
+            <Paragraph>insert Graph...</Paragraph>
           </View>
-          <Table>
-            <Row>
-              <Column>Workouts: 0</Column>
-              <Column>Lifted: 0 ton</Column>
-            </Row>
-            <Row>
-              <Column>Reps: 0</Column>
-              <Column>Sets: 0</Column>
-            </Row>
-            <Row>
-              <Column>Heaviest: 0 kg</Column>
-              <Column>Time: 00:00 h</Column>
-            </Row>
-          </Table>
+          <Row>
+            <Column>
+              <Paragraph>Workouts: 0</Paragraph>
+            </Column>
+            <Column>
+              <Paragraph>Lifted: 0 ton</Paragraph>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Paragraph>Reps: 0</Paragraph>
+            </Column>
+            <Column>
+              <Paragraph>Sets: 0</Paragraph>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Paragraph>Heaviest: 0 kg</Paragraph>
+            </Column>
+            <Column>
+              <Paragraph>Time: 00:00 h</Paragraph>
+            </Column>
+          </Row>
         </View>
       </FilterCard>
     </View>
   );
 };
-
-const Table = styled.View`
-  background-color: transparent;
-`;
 
 const Row = styled.View`
   flex-direction: row;

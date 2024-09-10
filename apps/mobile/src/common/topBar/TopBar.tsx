@@ -21,14 +21,17 @@ const Container = styled.View`
   border-bottom-color: #333;
   border-bottom-width: 1px;
   padding-horizontal: 20px;
+  background-color: #0e172a;
 `;
 
 const BodyMeasurements = styled.Text`
   flex: 1;
   align-items: center;
+  color: #fff;
 `;
 
 const TrainingLog = styled.Text`
   flex: 1;
   align-items: center;
+  color: #fff;
 `;

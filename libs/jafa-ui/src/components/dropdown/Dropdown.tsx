@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 type Props = {
   options: Option[];
-  defaultOption: Option;
+  defaultOption?: Option;
 };
 
 type Option = {
@@ -12,20 +12,26 @@ type Option = {
   value: string;
 };
 
-const placeholderFallback = {
+const defaultOptionFallback = {
   label: 'Select an option...',
   value: '',
 };
 
 export const Dropdown = ({ options, defaultOption }: Props) => {
-  const [value, setValue] = useState<string | undefined>(defaultOption.value);
+  const [value, setValue] = useState<string | undefined>(
+    defaultOption ? defaultOption.value : defaultOptionFallback.value
+  );
 
-  const allOptions = [placeholderFallback, ...options].map((option) => {
+  const allOptions = [
+    defaultOption ? defaultOption : defaultOptionFallback,
+    ...options,
+  ].map((option) => {
     return (
       <Picker.Item
         label={option.label}
         value={option.value}
         key={option.value}
+        style={{ color: '#fff', backgroundColor: '#172234' }}
       />
     );
   });

@@ -1,46 +1,69 @@
-import React, { useRef } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-import BottomSheet from '@gorhom/bottom-sheet';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import { LoggedInStackParamList } from '../../../common/navigation/types/NavigationParamLists';
+import React from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ButtonComponent } from '@jafa/jafa-ui';
 
-// type NavigationProps = NativeStackNavigationProp<LoggedInStackParamList>;
+const WorkoutScreen = () => {
+  const navigation = useNavigation();
 
-export default function WorkoutScreen() {
-  // const navigation = useNavigation<NavigationProps>();
-  const bottomSheetRef = useRef(null);
-
-  const snapPoints = ['25%', '50%'];
-
-  const handleOpenPress = () => {
-    bottomSheetRef.current?.expand();
-  };
-
-  const onStartNewWorkout = () => {
-    // navigation.navigate('StartNewWorkout');
+  const closeModal = () => {
+    navigation.goBack();
   };
 
   return (
-    <View style={styles.container}>
-      <Button title="Open Bottom Sheet" onPress={handleOpenPress} />
-      <BottomSheet ref={bottomSheetRef} index={-1} snapPoints={snapPoints}>
-        <View style={styles.contentContainer}>
-          <Button title="Start new workout" onPress={() => onStartNewWorkout} />
+    <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={closeModal}>
+        <View style={styles.overlay} />
+      </TouchableWithoutFeedback>
+      <View style={styles.contentContainer}>
+        <View style={styles.content}>
+          <ButtonComponent
+            label="Start new workout"
+            onPress={() => {
+              // Handle start new workout
+            }}
+          />
+          <ButtonComponent
+            label="Train a logged workout again"
+            onPress={() => {
+              // Handle train logged workout
+            }}
+          />
+          <ButtonComponent
+            label="Plan a workout"
+            onPress={() => {
+              // Handle plan workout
+            }}
+          />
         </View>
-      </BottomSheet>
-    </View>
+      </View>
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  content: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    maxHeight: '75%',
   },
 });
+
+export default WorkoutScreen;

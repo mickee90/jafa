@@ -13,17 +13,17 @@ import {
   LoggedOutStackParamList,
 } from './types/NavigationParamLists';
 import WorkoutScreen from '../../features/workout/screens/WorkoutScreen';
-import { ChooseExerciseScreen } from '../../features/workout/screens/ChooseExerciseScreen';
 import { isLoggedIn } from '../../features/auth/ducks/authSelectors';
 import { useAppSelector } from '../../store/store';
 import { TopBar } from '../topBar/TopBar';
-import { opacity } from 'react-native-reanimated/lib/typescript/Colors';
 
 export const Navigation = () => {
   const isAuth = useAppSelector(isLoggedIn);
 
   const LoggedOutStack = createNativeStackNavigator<LoggedOutStackParamList>();
   const LoggedInStack = createBottomTabNavigator<LoggedInStackParamList>();
+
+  const EmptyComponent = () => null;
 
   const LoggedOutNavigator = () => (
     <LoggedOutStack.Navigator
@@ -64,12 +64,6 @@ export const Navigation = () => {
       </MainStack.Navigator>
     );
 
-    // const modalScreenOptions = {
-    //   presentation: 'modal',
-    //   animation: 'slide_from_bottom',
-    //   headerShown: false,
-    // };
-
     return (
       <RootStack.Navigator>
         <RootStack.Screen
@@ -95,10 +89,6 @@ export const Navigation = () => {
     );
   };
 
-  // Add this empty component
-  const EmptyComponent = () => null;
-
-  // const LoggedInNavigator = () => (
   //   <LoggedInStack.Navigator
   //     initialRouteName="Home"
   //     screenOptions={{ header: () => <TopBar /> }}

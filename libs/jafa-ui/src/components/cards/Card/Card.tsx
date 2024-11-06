@@ -53,7 +53,7 @@ const Row = styled.View`
 `;
 
 const CardStyles = styled.View`
-  border-radius: 10;
+  border-radius: 10px;
   padding-horizontal: 8px;
 `;
 
@@ -61,13 +61,13 @@ const CardHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   border-bottom-color: #000;
-  border-bottom-width: 1;
+  border-bottom-width: 1px;
   padding-horizontal: 8px;
 `;
 
 const CardBody = styled.View`
   border-bottom-color: #000;
-  border-bottom-width: 1;
+  border-bottom-width: 1px;
   background-color: #172234;
   padding-horizontal: 8px;
   padding-vertical: 16px;

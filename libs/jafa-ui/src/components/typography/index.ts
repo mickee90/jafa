@@ -1,4 +1,5 @@
 export * from './paragraph/Paragraph';
+export * from './link/Link';
 export * from './title1/Title1Component';
 export * from './title2/Title2Component';
 export * from './title3/Title3Component';

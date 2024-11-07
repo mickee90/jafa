@@ -9,7 +9,13 @@ export const ProgramListContainer = () => {
   return (
     <Container>
       {groupedPrograms.map((group) => (
-        <Card key={group.type.id} title={group.type.name}>
+        <Card
+          key={group.type.id}
+          title={group.type.name}
+          headerRight={
+            group.type.isPremium ? <PremiumText>Premium</PremiumText> : ''
+          }
+        >
           {group.programs.map((program) => (
             <ProgramItem key={program.id} program={program} />
           ))}
@@ -21,4 +27,8 @@ export const ProgramListContainer = () => {
 
 const Container = styled.View`
   flex: 1;
+`;
+
+const PremiumText = styled.Text`
+  color: green;
 `;

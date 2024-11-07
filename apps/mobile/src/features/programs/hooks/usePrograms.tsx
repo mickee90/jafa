@@ -1,9 +1,5 @@
-import { useMemo, useState } from 'react';
-import {
-  GroupedPrograms,
-  Program,
-  ProgramType,
-} from '../components/ProgramItem/ProgramItem';
+import { useMemo } from 'react';
+import { Program, ProgramType, GroupedPrograms } from '../models/Programs';
 
 export const usePrograms = () => {
   // TODO: Fetch from db
@@ -27,21 +23,19 @@ export const usePrograms = () => {
       {
         id: '1',
         name: 'Squat & Accessory Exercise 2 days/week',
-        isPremium: true,
         typeId: '1',
       },
       {
         id: '2',
         name: 'Squat Only - 2 days/week',
-        isPremium: true,
         typeId: '1',
       },
-      { id: '3', name: '3 days/week', isPremium: false, typeId: '2' },
-      { id: '4', name: '4 days/week', isPremium: false, typeId: '3' },
-      { id: '5', name: '4 days/week', isPremium: false, typeId: '4' },
-      { id: '6', name: '2 days/week', isPremium: false, typeId: '4' },
-      { id: '7', name: '5 days/week', isPremium: false, typeId: '4' },
-      { id: '7', name: '3 days/week', isPremium: false, typeId: '4' },
+      { id: '3', name: '3 days/week', typeId: '2' },
+      { id: '4', name: '4 days/week', typeId: '3' },
+      { id: '5', name: '4 days/week', typeId: '4' },
+      { id: '6', name: '2 days/week', typeId: '4' },
+      { id: '7', name: '5 days/week', typeId: '4' },
+      { id: '7', name: '3 days/week', typeId: '4' },
     ],
     []
   );
@@ -70,18 +64,22 @@ export const usePrograms = () => {
       {
         id: '1',
         name: 'Beginner Squat Program',
+        isPremium: false,
       },
       {
         id: '2',
         name: 'Beginner Strength Training Program',
+        isPremium: false,
       },
       {
         id: '3',
         name: 'Bench Press Program',
+        isPremium: true,
       },
       {
         id: '4',
         name: 'Bodybuilding 313',
+        isPremium: true,
       },
     ],
     []
@@ -96,7 +94,5 @@ export const usePrograms = () => {
 
   return {
     groupedPrograms,
-    // setPrograms,
-    // setProgramTypes,
   };
 };

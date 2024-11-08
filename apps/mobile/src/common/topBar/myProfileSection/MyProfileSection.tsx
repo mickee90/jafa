@@ -1,4 +1,3 @@
-import { Text } from 'react-native';
 import styled from '@emotion/native';
 import { Paragraph } from '@jafa/jafa-ui';
 

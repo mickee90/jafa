@@ -13,6 +13,7 @@ jest.debug.config.js
 .tool-versions
 /.nx-cache
 /.nx
+.env
 
 # Android
 apps/mobile/android/app/build/

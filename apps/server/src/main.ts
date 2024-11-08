@@ -4,18 +4,31 @@
  */
 
 import express from 'express';
-import * as path from 'path';
+import cors from 'cors';
+import { createApolloServer } from './config/apollo';
+import { authMiddleware } from './middlewares/authMiddleware';
+import { connectDatabase } from './config/db';
 
-const app = express();
+async function startServer() {
+  const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+  // Connect to MongoDB
+  await connectDatabase();
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to server!' });
-});
+  // Middleware
+  app.use(cors());
+  app.use(express.json());
 
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+  // Create and apply Apollo Server
+  const { middleware: apolloMiddleware } = await createApolloServer();
+
+  // Apply authentication middleware to GraphQL endpoint
+  app.use('/graphql', authMiddleware, apolloMiddleware);
+
+  const port = process.env.PORT || 3333;
+  app.listen(port, () => {
+    console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
+  });
+}
+
+startServer().catch((err) => console.error('Error starting server:', err));

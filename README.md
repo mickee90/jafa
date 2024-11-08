@@ -8,6 +8,9 @@ Root: `yarn android:emulator`
 Start app:
 `cd apps/mobile && npx nx run-android`
 
+Start server:
+`npx nx serve server`
+
 ## Integrate with editors
 
 Enhance your Nx experience by installing [Nx Console](https://nx.dev/nx-console) for your favorite editor. Nx Console

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 
 export const authMiddleware = (
   req: Request,
@@ -12,8 +13,11 @@ export const authMiddleware = (
   }
 
   try {
-    // Verify token and add user to request
-    // req.user = verifyToken(token);
+    const secretKey = process.env.JWT_SECRET || 'your_secret_key';
+    const decoded = jwt.verify(token, secretKey) as { id: string };
+
+    req.user = { id: decoded.id };
+
     next();
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });

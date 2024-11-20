@@ -2,7 +2,7 @@ export const muscleGroupTypeTypeDefs = `#graphql
   type MuscleGroupMetadata {
     exerciseId: String!
     primaryMuscle: Boolean!
-    order: Number!
+    order: Int!
   }
 
   type MuscleGroup {

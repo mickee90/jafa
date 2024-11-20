@@ -17,5 +17,6 @@ export const userTypeDefs = `#graphql
     createUser(email: String!, name: String): User!
     updateUser(id: ID!, email: String, name: String): User
     deleteUser(id: ID!): Boolean!
+    loginUser(email: String!, password: String!): User
   }
 `;

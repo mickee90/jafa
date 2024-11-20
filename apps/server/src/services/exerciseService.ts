@@ -1,10 +1,10 @@
 import { ObjectId } from 'mongodb';
-import { EXERCISES_COLLECTION } from '../models/exerciseModel';
-import { MUSCLE_GROUPS_COLLECTION } from '../models/muscleGroupModel';
+import { getExerciseCollection } from '../models/exerciseModel';
+import { getMuscleGroupCollection } from '../models/muscleGroupModel';
 import { DatabaseError, ValidationError } from '../errors';
 
 const getAll = async () => {
-  return await EXERCISES_COLLECTION.find().toArray();
+  return await getExerciseCollection().find().toArray();
 };
 
 const getById = async (id: string) => {
@@ -15,7 +15,7 @@ const getById = async (id: string) => {
 
     const objectId = new ObjectId(id);
 
-    const exercise = await EXERCISES_COLLECTION.findOne({ _id: objectId });
+    const exercise = await getExerciseCollection().findOne({ _id: objectId });
 
     if (!exercise) {
       throw new Error(`Exercise with ID ${id} not found`);
@@ -29,57 +29,63 @@ const getById = async (id: string) => {
 
 // Search exercises by name across all groups
 const search = async (searchTerm: string) => {
-  return await EXERCISES_COLLECTION.aggregate([
-    {
-      $match: {
-        name: { $regex: searchTerm, $options: 'i' },
+  return await getExerciseCollection()
+    .aggregate([
+      {
+        $match: {
+          name: { $regex: searchTerm, $options: 'i' },
+        },
       },
-    },
-    {
-      $lookup: {
-        from: 'muscleGroups',
-        localField: '_id',
-        foreignField: 'exercises.exerciseId',
-        as: 'groups',
+      {
+        $lookup: {
+          from: 'muscleGroups',
+          localField: '_id',
+          foreignField: 'exercises.exerciseId',
+          as: 'groups',
+        },
       },
-    },
-  ]).toArray();
+    ])
+    .toArray();
 };
 
 // Find exercises that belong to multiple groups
 const findSharedExercises = async () => {
-  return await MUSCLE_GROUPS_COLLECTION.aggregate([
-    { $unwind: '$exercises' },
-    {
-      $group: {
-        _id: '$exercises.exerciseId',
-        groups: { $push: '$name' },
-        count: { $sum: 1 },
+  return await getMuscleGroupCollection()
+    .aggregate([
+      { $unwind: '$exercises' },
+      {
+        $group: {
+          _id: '$exercises.exerciseId',
+          groups: { $push: '$name' },
+          count: { $sum: 1 },
+        },
       },
-    },
-    { $match: { count: { $gt: 1 } } },
-    {
-      $lookup: {
-        from: 'exercises',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'exerciseDetails',
+      { $match: { count: { $gt: 1 } } },
+      {
+        $lookup: {
+          from: 'exercises',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'exerciseDetails',
+        },
       },
-    },
-  ]).toArray();
+    ])
+    .toArray();
 };
 
 // Get all groups that contain a specific exercise
 const getGroupsForExercise = async (exerciseName) => {
-  const exercise = await EXERCISES_COLLECTION.findOne({
+  const exercise = await getExerciseCollection().findOne({
     name: exerciseName,
   });
 
   if (!exercise) return [];
 
-  return await MUSCLE_GROUPS_COLLECTION.find({
-    'exercises.exerciseId': exercise._id,
-  }).toArray();
+  return await getMuscleGroupCollection()
+    .find({
+      'exercises.exerciseId': exercise._id,
+    })
+    .toArray();
 };
 
 export const exerciseService = {

@@ -33,7 +33,8 @@ export const userResolvers = {
       if (!user) {
         throw new Error('Invalid email or password');
       }
-      return user; // Return user if login is successful
+
+      return user;
     },
     updateUser: async (
       _: RootType,

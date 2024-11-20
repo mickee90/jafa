@@ -1,7 +1,8 @@
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/db';
 
-export const EXERCISES_COLLECTION = getDb().collection<IExercise>('Exercises');
+export const getExerciseCollection = () =>
+  getDb().collection<IExercise>('Exercises');
 
 // MongoDB representation of an exercise
 export interface IExercise {

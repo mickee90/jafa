@@ -9,7 +9,7 @@ export const exerciseResolver = {
     exercise: async (_: RootType, { id }: { id: string }) => {
       return await exerciseService.getById(id);
     },
-    search: async (_: RootType, { word }: { word: string }) => {
+    searchExercises: async (_: RootType, { word }: { word: string }) => {
       return await exerciseService.search(word);
     },
   },

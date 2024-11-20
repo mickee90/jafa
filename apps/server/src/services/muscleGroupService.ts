@@ -1,10 +1,10 @@
-import { MUSCLE_GROUPS_COLLECTION } from '../models/muscleGroupModel';
+import { getMuscleGroupCollection } from '../models/muscleGroupModel';
 import { ObjectId } from 'mongodb';
 import { ValidationError, DatabaseError } from '../errors'; // Import custom error classes
 
 const getAll = async () => {
   try {
-    return await MUSCLE_GROUPS_COLLECTION.find().toArray();
+    return await getMuscleGroupCollection().find().toArray();
   } catch (error) {
     throw new DatabaseError('Failed to fetch muscle groups from the database');
   }
@@ -18,7 +18,7 @@ const getById = async (id: string) => {
   const objectId = new ObjectId(id);
 
   try {
-    const muscleGroup = await MUSCLE_GROUPS_COLLECTION.findOne({
+    const muscleGroup = await getMuscleGroupCollection().findOne({
       _id: objectId,
     });
 
@@ -34,50 +34,52 @@ const getById = async (id: string) => {
 
 // Get a muscle group including all exercises
 const getByName = async (groupName) => {
-  const result = await MUSCLE_GROUPS_COLLECTION.aggregate([
-    { $match: { name: groupName } },
-    {
-      $lookup: {
-        from: 'exercises',
-        localField: 'exercises.exerciseId',
-        foreignField: '_id',
-        as: 'exerciseDetails',
+  const result = await getMuscleGroupCollection()
+    .aggregate([
+      { $match: { name: groupName } },
+      {
+        $lookup: {
+          from: 'exercises',
+          localField: 'exercises.exerciseId',
+          foreignField: '_id',
+          as: 'exerciseDetails',
+        },
       },
-    },
-    {
-      $project: {
-        _id: 1,
-        name: 1,
-        description: 1,
-        exercises: {
-          $map: {
-            input: '$exercises',
-            as: 'groupExercise',
-            in: {
-              $mergeObjects: [
-                '$$groupExercise',
-                {
-                  details: {
-                    $arrayElemAt: [
-                      {
-                        $filter: {
-                          input: '$exerciseDetails',
-                          cond: {
-                            $eq: ['$$this._id', '$$groupExercise.exerciseId'],
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          exercises: {
+            $map: {
+              input: '$exercises',
+              as: 'groupExercise',
+              in: {
+                $mergeObjects: [
+                  '$$groupExercise',
+                  {
+                    details: {
+                      $arrayElemAt: [
+                        {
+                          $filter: {
+                            input: '$exerciseDetails',
+                            cond: {
+                              $eq: ['$$this._id', '$$groupExercise.exerciseId'],
+                            },
                           },
                         },
-                      },
-                      0,
-                    ],
+                        0,
+                      ],
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         },
       },
-    },
-  ]).toArray();
+    ])
+    .toArray();
 
   return result[0];
 };

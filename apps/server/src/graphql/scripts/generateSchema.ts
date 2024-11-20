@@ -1,8 +1,9 @@
-import { ApolloServer } from '@apollo/server';
+import path from 'path';
+import { writeFileSync } from 'fs';
+import { printSchema } from 'graphql';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { typeDefs } from '../types';
 import { resolvers } from '../resolvers';
-import { writeFileSync } from 'fs';
 
 async function generateSchema() {
   const schema = makeExecutableSchema({
@@ -10,15 +11,10 @@ async function generateSchema() {
     resolvers,
   });
 
-  const server = new ApolloServer({
-    schema,
-  });
+  const schemaSDL = printSchema(schema);
 
-  await server.start();
-
-  const schemaSDL = schema.toString();
-
-  writeFileSync('../schemas/schema.graphql', schemaSDL);
+  const schemaPath = path.join(__dirname, '..', 'schemas', 'schema.graphql');
+  writeFileSync(schemaPath, schemaSDL);
   console.log('GraphQL schema generated at schema.graphql');
 }
 

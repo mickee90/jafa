@@ -10,7 +10,8 @@
     "pods": "cd ios && bundle install && bundle exec pod install",
     "lint": "eslint --fix",
     "prepare": "node .husky/install.mjs",
-    "seed:db": "tsx apps/server/src/database/mongo-init"
+    "seed:db": "tsx apps/server/src/database/mongo-init",
+    "graphql:schema:generate": "tsx apps/server/src/graphql/scripts/generateSchema.ts"
   },
   "private": true,
   "resolutions": {

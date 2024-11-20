@@ -1,0 +1,55 @@
+type Query {
+  _empty: String
+  users: [User!]!
+  user(id: ID!): User
+  exercises: [Exercise!]!
+  exercise(id: ID!): Exercise
+  searchExercises(word: String!): [Exercise]!
+  muscleGroups: [MuscleGroup!]!
+  muscleGroup(id: ID!): MuscleGroup
+  muscleGroupByName(name: String!): MuscleGroup
+}
+
+type Mutation {
+  _empty: String
+  createUser(email: String!, name: String): User!
+  updateUser(id: ID!, email: String, name: String): User
+  deleteUser(id: ID!): Boolean!
+  loginUser(email: String!, password: String!): User
+}
+
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  name: String!
+  sex: String!
+  birthDate: String!
+}
+
+type ExerciseMetadata {
+  equipment: [String]!
+  difficulty: String!
+}
+
+type Exercise {
+  id: ID!
+  name: String!
+  description: String!
+  instructions: [String!]!
+  metadata: ExerciseMetadata!
+}
+
+type MuscleGroupMetadata {
+  exerciseId: String!
+  primaryMuscle: Boolean!
+  order: Int!
+}
+
+type MuscleGroup {
+  id: ID!
+  name: String!
+  description: String!
+  exercises: [Exercise!]!
+  metadata: MuscleGroupMetadata!
+}

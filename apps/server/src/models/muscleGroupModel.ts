@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/db';
 
-export const MUSCLE_GROUPS_COLLECTION =
+export const getMuscleGroupCollection = () =>
   getDb().collection<IMuscleGroup>('MuscleGroups');
 
 // MongoDB representations

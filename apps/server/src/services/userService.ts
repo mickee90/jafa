@@ -11,12 +11,12 @@ import { UserType } from '../models/userTypeModel';
 import bcrypt from 'bcrypt';
 import { hashPassword, validatePassword } from '../utils/passwords';
 
-const COLLECTION = getDb().collection<IUser>(USER_COLLECTION);
+const getCollection = () => getDb().collection<IUser>(USER_COLLECTION);
 
 const findAll = async (includingDelete = false) => {
   try {
     const filter = includingDelete ? {} : { isDeleted: false };
-    return await COLLECTION.find(filter).toArray();
+    return await getCollection().find(filter).toArray();
   } catch (error) {
     throw new DatabaseError('Failed to fetch users');
   }
@@ -28,7 +28,7 @@ const findById = async (id: string, includingDelete = false) => {
       throw new ValidationError('Invalid user ID');
     }
 
-    const user = await COLLECTION.findOne({
+    const user = await getCollection().findOne({
       _id: new ObjectId(id),
       isDeleted: includingDelete,
     });
@@ -63,7 +63,7 @@ const create = async (data: IUserData) => {
       throw new ValidationError(passwordErrors.join(', '));
     }
 
-    const existingUser = await COLLECTION.findOne({ email: data.email });
+    const existingUser = await getCollection().findOne({ email: data.email });
     if (existingUser) {
       throw new ValidationError('Email already exists');
     }
@@ -81,12 +81,12 @@ const create = async (data: IUserData) => {
       updatedAt: now,
     };
 
-    const result = await COLLECTION.insertOne(newUser);
+    const result = await getCollection().insertOne(newUser);
     if (!result.acknowledged) {
       throw new DatabaseError('Failed to create user');
     }
 
-    return await COLLECTION.findOne({ _id: result.insertedId });
+    return await getCollection().findOne({ _id: result.insertedId });
   } catch (error) {
     if (error instanceof ValidationError) {
       throw error;
@@ -110,7 +110,7 @@ const update = async (
       data.password = await hashPassword(data.password);
     }
 
-    const result = await COLLECTION.findOneAndUpdate(
+    const result = await getCollection().findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: { ...data, updatedAt: new Date() } },
       { returnDocument: 'after' }
@@ -132,7 +132,7 @@ const remove = async (id: string, currentUserId: string) => {
       throw new ValidationError('Invalid user ID');
     }
 
-    const updateResult = await COLLECTION.updateOne(
+    const updateResult = await getCollection().updateOne(
       { _id: new ObjectId(id), isDeleted: false },
       {
         $set: {
@@ -162,7 +162,7 @@ const permanentDelete = async (id: string) => {
       throw new ValidationError('Invalid user ID');
     }
 
-    const result = await COLLECTION.deleteOne({ _id: new ObjectId(id) });
+    const result = await getCollection().deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       throw new ValidationError('User not found');
@@ -186,7 +186,7 @@ const restore = async (id: string) => {
       throw new ValidationError('Invalid user ID');
     }
 
-    const updateResult = await COLLECTION.updateOne(
+    const updateResult = await getCollection().updateOne(
       { _id: new ObjectId(id), isDeleted: true },
       {
         $set: {
@@ -220,8 +220,12 @@ const findPaginated = async (
   const finalFilter = { ...filter, isDeleted: false };
 
   const [total, items] = await Promise.all([
-    COLLECTION.countDocuments(finalFilter),
-    COLLECTION.find(finalFilter, options).skip(skip).limit(limit).toArray(),
+    getCollection().countDocuments(finalFilter),
+    getCollection()
+      .find(finalFilter, options)
+      .skip(skip)
+      .limit(limit)
+      .toArray(),
   ]);
 
   return {
@@ -238,7 +242,7 @@ const verify = async (
   password: string
 ): Promise<IUser | null> => {
   try {
-    const user = await COLLECTION.findOne({ email });
+    const user = await getCollection().findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
       return user; // Return user if password matches
     }

@@ -1,43 +1,13 @@
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
-import { hashPassword } from '../utils/passwords';
+import { userTypes, users } from './seeds/users';
+import { exercises } from './seeds/exercises';
+import { muscleGroups } from './seeds/muscleGroups';
 
 dotenv.config();
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/jafa';
 const DB_NAME = 'jafa';
-
-const userTypeData = [
-  { type: 'ADMIN' },
-  { type: 'STANDARD' },
-  { type: 'PREMIUM' },
-  { type: 'GUEST' },
-];
-
-const userData = [
-  {
-    username: 'admin',
-    email: 'admin@example.com',
-    name: 'Admin',
-    password: await hashPassword('admin'),
-    sex: 'Other',
-    birthDate: new Date('1990-01-01'),
-    userType: 'ADMIN',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    username: 'user1',
-    email: 'user1@example.com',
-    name: 'User 1',
-    password: await hashPassword('user1'),
-    sex: 'Male',
-    birthDate: new Date('1995-05-15'),
-    userType: 'STANDARD',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
 
 async function main() {
   const client = new MongoClient(MONGODB_URI);
@@ -49,12 +19,24 @@ async function main() {
     // Make the appropriate DB calls
     const db = client.db(DB_NAME);
 
+    // Clear existing collections
+    await clearCollections(db, [
+      'UserTypes',
+      'Users',
+      'Exercises',
+      'MuscleGroups',
+    ]);
+
     // Create collections if they do not exist
     await createCollectionIfNotExists(db, 'UserTypes');
     await createCollectionIfNotExists(db, 'Users');
+    await createCollectionIfNotExists(db, 'Exercises');
+    await createCollectionIfNotExists(db, 'MuscleGroups');
 
-    await insertDataToCollection(db, 'UserTypes', userTypeData);
-    await insertDataToCollection(db, 'Users', userData);
+    await insertDataToCollection(db, 'UserTypes', userTypes);
+    await insertDataToCollection(db, 'Users', await users());
+    await insertDataToCollection(db, 'Exercises', exercises);
+    await insertDataToCollection(db, 'MuscleGroups', muscleGroups);
 
     console.log('Collections created successfully');
   } catch (error) {
@@ -81,6 +63,19 @@ async function createCollectionIfNotExists(db, collectionName) {
 
 async function insertDataToCollection(db, collectionName, data) {
   await db.collection(collectionName).insertMany(data);
+}
+
+// New function to clear collections
+async function clearCollections(db, collectionNames) {
+  for (const collectionName of collectionNames) {
+    const collectionExists = await db
+      .listCollections({ name: collectionName })
+      .hasNext();
+    if (collectionExists) {
+      await db.collection(collectionName).drop();
+      console.log(`Collection '${collectionName}' cleared.`);
+    }
+  }
 }
 
 main().catch(console.error);

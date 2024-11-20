@@ -13,4 +13,10 @@ export default async () => ({
       '<rootDir>/node_modules/@emotion/native/dist/emotion-native.cjs.js',
   },
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
+  testEnvironment: 'node',
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
 });

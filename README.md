@@ -20,6 +20,9 @@ connection string:
 Start server:
 `npx nx serve server`
 
+Seed database:
+`yarn seed:db`
+
 ## Integrate with editors
 
 Enhance your Nx experience by installing [Nx Console](https://nx.dev/nx-console) for your favorite editor. Nx Console

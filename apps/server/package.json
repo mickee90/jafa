@@ -8,5 +8,9 @@
     "graphql": "^16.8.1",
     "cors": "^2.8.5",
     "bcrypt": "*"
+  },
+  "devDependencies": {
+    "typescript": "*",
+    "ts-node": "*"
   }
 }

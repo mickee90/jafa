@@ -1,18 +1,19 @@
 import { IUserData } from '../../models/userModel';
 import { userService } from '../../services/userService';
+import { RootType } from '../types';
 
 export const userResolvers = {
   Query: {
     users: async () => {
       return await userService.findAll();
     },
-    user: async (_: any, { id }: { id: string }) => {
+    user: async (_: RootType, { id }: { id: string }) => {
       return await userService.findById(id);
     },
   },
   Mutation: {
     createUser: async (
-      _: any,
+      _: RootType,
       { email, username, name, password, sex, birthDate }: IUserData
     ) => {
       return await userService.create({
@@ -25,7 +26,7 @@ export const userResolvers = {
       });
     },
     loginUser: async (
-      _: any,
+      _: RootType,
       { email, password }: { email: string; password: string }
     ) => {
       const user = await userService.verify(email, password);
@@ -35,7 +36,7 @@ export const userResolvers = {
       return user; // Return user if login is successful
     },
     updateUser: async (
-      _: any,
+      _: RootType,
       {
         id,
         email,
@@ -58,7 +59,7 @@ export const userResolvers = {
       });
     },
     deleteUser: async (
-      _: any,
+      _: RootType,
       { id }: { id: string },
       context: { user: { id: string } }
     ) => {

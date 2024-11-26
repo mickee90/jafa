@@ -19,4 +19,4 @@ export const userTypeDefs = `#graphql
     deleteUser(id: ID!): Boolean!
     loginUser(email: String!, password: String!): User
   }
-`;
+`

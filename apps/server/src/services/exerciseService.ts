@@ -1,13 +1,16 @@
 import { ObjectId } from 'mongodb';
-import { getExerciseCollection } from '../models/exerciseModel';
+import {
+  getExerciseCollection,
+  IGraphQLExercise,
+} from '../models/exerciseModel';
 import { getMuscleGroupCollection } from '../models/muscleGroupModel';
 import { DatabaseError, ValidationError } from '../errors';
 
-const getAll = async () => {
+const getAll = async (): Promise<IGraphQLExercise[] | []> => {
   return await getExerciseCollection().find().toArray();
 };
 
-const getById = async (id: string) => {
+const getById = async (id: string): Promise<IGraphQLExercise | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
@@ -28,7 +31,7 @@ const getById = async (id: string) => {
 };
 
 // Search exercises by name across all groups
-const search = async (searchTerm: string) => {
+const search = async (searchTerm: string): Promise<IGraphQLExercise[] | []> => {
   return await getExerciseCollection()
     .aggregate([
       {
@@ -49,7 +52,7 @@ const search = async (searchTerm: string) => {
 };
 
 // Find exercises that belong to multiple groups
-const findSharedExercises = async () => {
+const findSharedExercises = async (): Promise<IGraphQLExercise[] | []> => {
   return await getMuscleGroupCollection()
     .aggregate([
       { $unwind: '$exercises' },
@@ -74,7 +77,9 @@ const findSharedExercises = async () => {
 };
 
 // Get all groups that contain a specific exercise
-const getGroupsForExercise = async (exerciseName) => {
+const getGroupsForExercise = async (
+  exerciseName
+): Promise<IGraphQLExercise[] | []> => {
   const exercise = await getExerciseCollection().findOne({
     name: exerciseName,
   });

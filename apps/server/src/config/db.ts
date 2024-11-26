@@ -1,6 +1,7 @@
 import { MongoClient, Db } from 'mongodb';
 import dotenv from 'dotenv';
 import { setupCollections } from '../models/dbSetup';
+import { wrapCollection } from '../middlewares/mongodbMiddleware';
 
 dotenv.config();
 
@@ -9,12 +10,17 @@ const DB_NAME = 'jafa';
 
 let db: Db;
 
-export const getDb = () => {
+export const getDb = <T>() => {
   if (!db) {
     throw new Error('Database not initialized');
   }
 
-  return db;
+  return {
+    collection: <T>(name: string) => {
+      const collection = db.collection<T>(name);
+      return wrapCollection(collection);
+    },
+  };
 };
 
 export const connectDatabase = async () => {

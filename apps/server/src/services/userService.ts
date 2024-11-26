@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import { getDb } from '../config/db';
 import { ValidationError, DatabaseError } from '../errors';
 import {
+  IGraphQLUser,
   IUser,
   IUserData,
   USER_COLLECTION,
@@ -22,7 +23,10 @@ const findAll = async (includingDelete = false) => {
   }
 };
 
-const findById = async (id: string, includingDelete = false) => {
+const findById = async (
+  id: string,
+  includingDelete = false
+): Promise<IGraphQLUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
@@ -46,7 +50,7 @@ const findById = async (id: string, includingDelete = false) => {
   }
 };
 
-const create = async (data: IUserData) => {
+const create = async (data: IUserData): Promise<IGraphQLUser | null> => {
   try {
     if (!data.userType || !Object.values(UserType).includes(data.userType)) {
       data.userType = UserType.STANDARD;
@@ -126,7 +130,10 @@ const update = async (
   }
 };
 
-const remove = async (id: string, currentUserId: string) => {
+const remove = async (
+  id: string,
+  currentUserId: string
+): Promise<IGraphQLUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
@@ -156,7 +163,7 @@ const remove = async (id: string, currentUserId: string) => {
   }
 };
 
-const permanentDelete = async (id: string) => {
+const permanentDelete = async (id: string): Promise<boolean> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
@@ -180,7 +187,7 @@ const permanentDelete = async (id: string) => {
   }
 };
 
-const restore = async (id: string) => {
+const restore = async (id: string): Promise<IGraphQLUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
@@ -244,10 +251,10 @@ const verify = async (
   try {
     const user = await getCollection().findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-      return user; // Return user if password matches
+      return user;
     }
 
-    return null; // Return null if authentication fails
+    return null;
   } catch (error) {
     throw new DatabaseError('Failed to verify user');
   }

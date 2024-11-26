@@ -13,8 +13,8 @@ export const exerciseTypeDefs = `#graphql
   }
 
   extend type Query {
-    exercises: [Exercise!]!
+    exercises: [Exercise]!
     exercise(id: ID!): Exercise
     searchExercises(word: String!): [Exercise]!
   }
-`;
+`

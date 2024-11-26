@@ -30,8 +30,9 @@ export interface IUser extends ICreateUser {
 }
 
 // Full user interface including MongoDB fields
-export interface IGraphQLUser extends ICreateUser {
+export interface IGraphQLUser extends Omit<ICreateUser, 'birthDate'> {
   id: string;
+  birthDate: string;
 }
 
 // Optional: Add validation functions

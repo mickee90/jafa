@@ -1,8 +1,7 @@
 export const muscleGroupTypeTypeDefs = `#graphql
   type MuscleGroupMetadata {
-    exerciseId: String!
-    primaryMuscle: Boolean!
-    order: Int!
+    aliases: [String]!
+    category: String
   }
 
   type MuscleGroup {
@@ -14,8 +13,8 @@ export const muscleGroupTypeTypeDefs = `#graphql
   }
 
   extend type Query {
-    muscleGroups: [MuscleGroup!]!
+    muscleGroups: [MuscleGroup]!
     muscleGroup(id: ID!): MuscleGroup
     muscleGroupByName(name: String!): MuscleGroup
   }
-`;
+`

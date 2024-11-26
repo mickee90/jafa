@@ -1,6 +1,6 @@
-import { exerciseTypeDefs } from './exerciseType';
-import { muscleGroupTypeTypeDefs } from './muscleGroupType';
-import { userTypeDefs } from './userType';
+import { exerciseTypeDefs } from './exerciseType'
+import { muscleGroupTypeTypeDefs } from './muscleGroupType'
+import { userTypeDefs } from './userType'
 
 export const typeDefs = `#graphql
   type Query {
@@ -14,6 +14,6 @@ export const typeDefs = `#graphql
   ${userTypeDefs}
   ${exerciseTypeDefs}
   ${muscleGroupTypeTypeDefs}
-`;
+`
 
-export type RootType = unknown;
+export type RootType = unknown

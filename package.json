@@ -11,7 +11,8 @@
     "lint": "eslint --fix",
     "prepare": "node .husky/install.mjs",
     "seed:db": "tsx apps/server/src/database/mongo-init",
-    "graphql:schema:generate": "tsx apps/server/src/graphql/scripts/generateSchema.ts"
+    "graphql:schema:generate": "tsx apps/server/src/graphql/scripts/generateSchema.ts",
+    "graphql:typescript:generate": "graphql-codegen --config codegen.ts"
   },
   "private": true,
   "resolutions": {
@@ -55,6 +56,13 @@
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@graphql-codegen/cli": "5.0.3",
+    "@graphql-codegen/introspection": "4.0.3",
+    "@graphql-codegen/typescript": "4.1.1",
+    "@graphql-codegen/typescript-document-nodes": "4.0.11",
+    "@graphql-codegen/typescript-mongodb": "3.0.0",
+    "@graphql-codegen/typescript-operations": "^4.4.0",
+    "@graphql-codegen/typescript-resolvers": "4.4.0",
     "@graphql-tools/schema": "^10.0.8",
     "@nx/detox": "19.2.3",
     "@nx/eslint": "19.2.3",

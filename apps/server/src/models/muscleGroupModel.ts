@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { getDb } from '../config/db';
+import { IGraphQLExercise } from './exerciseModel';
 
 export const getMuscleGroupCollection = () =>
   getDb().collection<IMuscleGroup>('MuscleGroups');
@@ -31,10 +32,4 @@ export interface IGraphQLMuscleGroup {
   description: string;
   exercises: IGraphQLExercise[];
   metadata: IMetadata;
-}
-
-export interface IGraphQLExercise {
-  exerciseId: string;
-  primaryMuscle: boolean;
-  order: number;
 }

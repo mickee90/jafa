@@ -1,8 +1,11 @@
-import { getMuscleGroupCollection } from '../models/muscleGroupModel';
+import {
+  getMuscleGroupCollection,
+  IGraphQLMuscleGroup,
+} from '../models/muscleGroupModel';
 import { ObjectId } from 'mongodb';
 import { ValidationError, DatabaseError } from '../errors'; // Import custom error classes
 
-const getAll = async () => {
+const getAll = async (): Promise<IGraphQLMuscleGroup[] | []> => {
   try {
     return await getMuscleGroupCollection().find().toArray();
   } catch (error) {
@@ -10,7 +13,7 @@ const getAll = async () => {
   }
 };
 
-const getById = async (id: string) => {
+const getById = async (id: string): Promise<IGraphQLMuscleGroup | null> => {
   if (!ObjectId.isValid(id)) {
     throw new ValidationError('Invalid muscle group ID format');
   }
@@ -33,7 +36,7 @@ const getById = async (id: string) => {
 };
 
 // Get a muscle group including all exercises
-const getByName = async (groupName) => {
+const getByName = async (groupName): Promise<IGraphQLMuscleGroup | null> => {
   const result = await getMuscleGroupCollection()
     .aggregate([
       { $match: { name: groupName } },

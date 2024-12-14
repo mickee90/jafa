@@ -24,10 +24,10 @@ async function startServer() {
   const { middleware: apolloMiddleware } = await createApolloServer();
 
   // Apply authentication middleware to GraphQL endpoint
-  app.use('/graphql', authMiddleware, apolloMiddleware);
+  app.use('/graphql', apolloMiddleware);
 
   // Serve GraphQL Playground
-  app.get('/playground', graphqlPlayground({ endpoint: '/graphql' }));
+  app.get('/playground', graphqlPlayground({ endpoint: '/playground' }));
 
   const port = process.env.PORT || 3333;
   app.listen(port, () => {

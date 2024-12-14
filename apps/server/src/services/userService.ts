@@ -2,7 +2,6 @@ import { ObjectId } from 'mongodb';
 import { getDb } from '../config/db';
 import { ValidationError, DatabaseError } from '../errors';
 import {
-  IGraphQLUser,
   IUser,
   IUserData,
   USER_COLLECTION,
@@ -12,12 +11,14 @@ import { UserType } from '../models/userTypeModel';
 import bcrypt from 'bcrypt';
 import { hashPassword, validatePassword } from '../utils/passwords';
 
-const getCollection = () => getDb().collection<IUser>(USER_COLLECTION);
+const getCollection = async () =>
+  await getDb().collection<IUser>(USER_COLLECTION);
 
 const findAll = async (includingDelete = false) => {
   try {
     const filter = includingDelete ? {} : { isDeleted: false };
-    return await getCollection().find(filter).toArray();
+    const collection = await getCollection();
+    return await collection.find(filter).toArray();
   } catch (error) {
     throw new DatabaseError('Failed to fetch users');
   }
@@ -26,16 +27,18 @@ const findAll = async (includingDelete = false) => {
 const findById = async (
   id: string,
   includingDelete = false
-): Promise<IGraphQLUser | null> => {
+): Promise<IUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
     }
 
-    const user = await getCollection().findOne({
+    const collection = await getCollection();
+    const user = collection.findOne({
       _id: new ObjectId(id),
       isDeleted: includingDelete,
     });
+
     if (!user) {
       throw new ValidationError('User not found');
     }
@@ -50,7 +53,7 @@ const findById = async (
   }
 };
 
-const create = async (data: IUserData): Promise<IGraphQLUser | null> => {
+const create = async (data: IUserData): Promise<IUser | null> => {
   try {
     if (!data.userType || !Object.values(UserType).includes(data.userType)) {
       data.userType = UserType.STANDARD;
@@ -67,7 +70,8 @@ const create = async (data: IUserData): Promise<IGraphQLUser | null> => {
       throw new ValidationError(passwordErrors.join(', '));
     }
 
-    const existingUser = await getCollection().findOne({ email: data.email });
+    const collection = await getCollection();
+    const existingUser = await collection.findOne({ email: data.email });
     if (existingUser) {
       throw new ValidationError('Email already exists');
     }
@@ -85,12 +89,12 @@ const create = async (data: IUserData): Promise<IGraphQLUser | null> => {
       updatedAt: now,
     };
 
-    const result = await getCollection().insertOne(newUser);
+    const result = await collection.insertOne(newUser);
     if (!result.acknowledged) {
       throw new DatabaseError('Failed to create user');
     }
 
-    return await getCollection().findOne({ _id: result.insertedId });
+    return await collection.findOne({ _id: result.insertedId });
   } catch (error) {
     if (error instanceof ValidationError) {
       throw error;
@@ -114,7 +118,8 @@ const update = async (
       data.password = await hashPassword(data.password);
     }
 
-    const result = await getCollection().findOneAndUpdate(
+    const collection = await getCollection();
+    const result = await collection.findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: { ...data, updatedAt: new Date() } },
       { returnDocument: 'after' }
@@ -133,13 +138,14 @@ const update = async (
 const remove = async (
   id: string,
   currentUserId: string
-): Promise<IGraphQLUser | null> => {
+): Promise<IUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
     }
 
-    const updateResult = await getCollection().updateOne(
+    const collection = await getCollection();
+    const updateResult = await collection.findOneAndUpdate(
       { _id: new ObjectId(id), isDeleted: false },
       {
         $set: {
@@ -169,7 +175,8 @@ const permanentDelete = async (id: string): Promise<boolean> => {
       throw new ValidationError('Invalid user ID');
     }
 
-    const result = await getCollection().deleteOne({ _id: new ObjectId(id) });
+    const collection = await getCollection();
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
       throw new ValidationError('User not found');
@@ -187,13 +194,14 @@ const permanentDelete = async (id: string): Promise<boolean> => {
   }
 };
 
-const restore = async (id: string): Promise<IGraphQLUser | null> => {
+const restore = async (id: string): Promise<IUser | null> => {
   try {
     if (!ObjectId.isValid(id)) {
       throw new ValidationError('Invalid user ID');
     }
 
-    const updateResult = await getCollection().updateOne(
+    const collection = await getCollection();
+    const updateResult = await collection.findOneAndUpdate(
       { _id: new ObjectId(id), isDeleted: true },
       {
         $set: {
@@ -225,14 +233,11 @@ const findPaginated = async (
 ) => {
   const skip = (page - 1) * limit;
   const finalFilter = { ...filter, isDeleted: false };
+  const collection = await getCollection();
 
   const [total, items] = await Promise.all([
-    getCollection().countDocuments(finalFilter),
-    getCollection()
-      .find(finalFilter, options)
-      .skip(skip)
-      .limit(limit)
-      .toArray(),
+    collection.countDocuments(finalFilter),
+    collection.find(finalFilter, options).skip(skip).limit(limit).toArray(),
   ]);
 
   return {
@@ -249,14 +254,15 @@ const verify = async (
   password: string
 ): Promise<IUser | null> => {
   try {
-    const user = await getCollection().findOne({ email });
+    const collection = await getCollection();
+    const user = await collection.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
       return user;
     }
 
     return null;
   } catch (error) {
-    throw new DatabaseError('Failed to verify user');
+    throw new DatabaseError(`Failed to verify user. Error: ${error}`);
   }
 };
 

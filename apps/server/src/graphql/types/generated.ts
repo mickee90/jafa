@@ -31,6 +31,12 @@ export type ExerciseMetadata = {
   equipment: Array<Maybe<Scalars['String']['output']>>;
 };
 
+export type LoggedInUser = {
+  __typename?: 'LoggedInUser';
+  token: Scalars['String']['output'];
+  user: User;
+};
+
 export type MuscleGroup = {
   __typename?: 'MuscleGroup';
   description: Scalars['String']['output'];
@@ -51,7 +57,7 @@ export type Mutation = {
   _empty?: Maybe<Scalars['String']['output']>;
   createUser: User;
   deleteUser: Scalars['Boolean']['output'];
-  loginUser?: Maybe<User>;
+  loginUser?: Maybe<LoggedInUser>;
   updateUser?: Maybe<User>;
 };
 
@@ -202,6 +208,7 @@ export type ResolversTypes = {
   Exercise: ResolverTypeWrapper<Exercise>;
   ExerciseMetadata: ResolverTypeWrapper<ExerciseMetadata>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  LoggedInUser: ResolverTypeWrapper<LoggedInUser>;
   MuscleGroup: ResolverTypeWrapper<MuscleGroup>;
   MuscleGroupMetadata: ResolverTypeWrapper<MuscleGroupMetadata>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -216,6 +223,7 @@ export type ResolversParentTypes = {
   Exercise: Exercise;
   ExerciseMetadata: ExerciseMetadata;
   ID: Scalars['ID']['output'];
+  LoggedInUser: LoggedInUser;
   MuscleGroup: MuscleGroup;
   MuscleGroupMetadata: MuscleGroupMetadata;
   Mutation: {};
@@ -239,6 +247,12 @@ export type ExerciseMetadataResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type LoggedInUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoggedInUser'] = ResolversParentTypes['LoggedInUser']> = {
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MuscleGroupResolvers<ContextType = any, ParentType extends ResolversParentTypes['MuscleGroup'] = ResolversParentTypes['MuscleGroup']> = {
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   exercises?: Resolver<Array<ResolversTypes['Exercise']>, ParentType, ContextType>;
@@ -258,7 +272,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'email'>>;
   deleteUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
-  loginUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
+  loginUser?: Resolver<Maybe<ResolversTypes['LoggedInUser']>, ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
   updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id'>>;
 };
 
@@ -287,6 +301,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Exercise?: ExerciseResolvers<ContextType>;
   ExerciseMetadata?: ExerciseMetadataResolvers<ContextType>;
+  LoggedInUser?: LoggedInUserResolvers<ContextType>;
   MuscleGroup?: MuscleGroupResolvers<ContextType>;
   MuscleGroupMetadata?: MuscleGroupMetadataResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;

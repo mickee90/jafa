@@ -7,34 +7,39 @@ import {
   Title3Component,
   InputComponent,
 } from '@jafa/jafa-ui';
+import { useLogin } from '../../../../graphql/hooks/useLogin';
+import styled from '@emotion/native';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
+  const { login, loading, error } = useLogin();
+  const [loginError, setLoginError] = useState('');
 
-  // TODO: Change to formData + add error handling
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onLogin = () => {
-    dispatch(authActions.login());
+  const onLogin = async () => {
+    // dispatch(authActions.login());
 
-    // TODO: implement later to avoid entering creds all the time
-    // if (username === 'user' && password === 'password') {
-    //   Alert.alert('Login Success', 'You have successfully logged in!');
-    //   dispatch(authActions.login());
-    // } else {
-    //   Alert.alert('Login Failed', 'Invalid username or password');
-    // }
+    try {
+      const user = await login(email, password);
+      if (user) {
+        dispatch(authActions.login());
+        // Navigate to the next screen
+      }
+    } catch (err) {
+      setLoginError(error.message ? error.message : err.message);
+    }
   };
 
   return (
     <View>
       <Title3Component title="Login" />
       <InputComponent
-        label="Username"
-        onChangeText={(value) => setUsername(value)}
-        placeholder="Username"
-        value={username}
+        label="Email"
+        onChangeText={(value) => setEmail(value)}
+        placeholder="Email"
+        value={email}
       />
       <InputComponent
         label="Password"
@@ -43,7 +48,12 @@ export const LoginForm = () => {
         value={password}
         secureTextEntry={true}
       />
-      <ButtonComponent label="Login" onPress={onLogin} />
+      <ButtonComponent label="Login" onPress={onLogin} disabled={loading} />
+      {loginError && <ErrorText>Error: {loginError}</ErrorText>}
     </View>
   );
 };
+
+const ErrorText = styled.Text`
+  color: red;
+`;

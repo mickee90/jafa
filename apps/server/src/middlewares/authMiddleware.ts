@@ -6,6 +6,12 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  const isLoginMutation = req.body?.operationName === 'LoginUser';
+
+  if (isLoginMutation) {
+    next();
+  }
+
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {

@@ -15,7 +15,7 @@ Connect to the database:
 `docker exec -it mongodb mongosh -u root -p incorrectpassword`
 
 connection string:
-`mongodb://root:example@localhost:27017/jafa?authSource=admin`
+`mongodb://root:incorrectpassword@localhost:27017/jafa?authSource=admin`
 
 Start server:
 `npx nx serve server`

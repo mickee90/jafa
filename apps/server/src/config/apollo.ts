@@ -25,9 +25,18 @@ export const createApolloServer = async () => {
         req,
       }: {
         req: Request & { user?: { id: string } };
-      }) => ({
-        user: req.user,
-      }),
+      }) => {
+        // Check if the request is for the loginUser mutation
+        const isLoginMutation = req.body?.operationName === 'LoginUser';
+
+        if (isLoginMutation) {
+          return {}; // No user context needed for login
+        }
+
+        // If not login, check for user context
+        const user = req.user; // This will be set by the authMiddleware
+        return { user };
+      },
     }),
     server,
   };

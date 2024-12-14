@@ -6,6 +6,7 @@ import { ViewStyle } from 'react-native';
 type Props = {
   label: string;
   onPress: () => void;
+  disabled?: boolean;
   mode?: 'text' | 'contained' | 'outlined' | 'elevated' | 'contained-tonal';
   containerStyle?: ViewStyle;
   testID?: string;
@@ -14,13 +15,14 @@ type Props = {
 export const ButtonComponent = ({
   label,
   onPress,
+  disabled = false,
   mode = 'contained',
   containerStyle,
   testID,
 }: Props) => {
   return (
     <Container style={containerStyle} testID={testID}>
-      <Button mode={mode} onPress={onPress}>
+      <Button mode={mode} onPress={onPress} disabled={disabled}>
         {label}
       </Button>
     </Container>

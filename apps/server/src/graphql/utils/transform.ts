@@ -4,3 +4,11 @@ export const transformDocument = (doc: any) => {
   }
   return doc;
 };
+
+export const transformDocuments = (docs: any) => {
+  if (docs && docs.length > 0) {
+    return docs.map((doc) => transformDocument(doc));
+  }
+
+  return docs;
+};

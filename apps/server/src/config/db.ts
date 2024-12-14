@@ -16,9 +16,11 @@ export const getDb = <T>() => {
   }
 
   return {
-    collection: <T>(name: string) => {
-      const collection = db.collection<T>(name);
-      return wrapCollection(collection);
+    collection: async <T>(name: string) => {
+      // return await db.collection<T>(name);
+      return await db.collection<T>(name);
+      // const collection = db.collection<T>(name);
+      // return await wrapCollection(collection);
     },
   };
 };
@@ -30,7 +32,6 @@ export const connectDatabase = async () => {
 
     db = client.db(DB_NAME);
 
-    // Setup collections and indexes
     await setupCollections(db);
 
     console.log('🗄️  Connected to MongoDB');

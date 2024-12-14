@@ -11,5 +11,11 @@
     "src/**/*.spec.tsx",
     "src/test-setup.ts"
   ],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "../../libs/jafa-ui/src/**/*"
+  ]
 }

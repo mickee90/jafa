@@ -18,6 +18,7 @@ jest.debug.config.js
 # Android
 apps/mobile/android/app/build/
 apps/mobile/android/build/
+apps/mobile/android/.gradle/
 
 # iOS
 apps/mobile/ios/build/

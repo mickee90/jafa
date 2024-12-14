@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../mutations/loginUser';
-import { User } from '../types';
-import { LocalStorage } from '../../utils/storage';
+import { LOGIN_USER } from '../../../graphql/mutations/loginUser';
+import { User } from '../../../graphql/types';
+import { LocalStorage } from '../../../utils/storage';
 
 export const useLogin = () => {
   const [loginUser, { loading, error }] = useMutation<

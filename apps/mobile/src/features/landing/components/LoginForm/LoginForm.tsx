@@ -7,7 +7,7 @@ import {
   Title3Component,
   InputComponent,
 } from '@jafa/jafa-ui';
-import { useLogin } from '../../../../graphql/hooks/useLogin';
+import { useLogin } from '../../../auth/hooks/useLogin';
 import styled from '@emotion/native';
 
 export const LoginForm = () => {
@@ -19,13 +19,10 @@ export const LoginForm = () => {
   const [password, setPassword] = useState('');
 
   const onLogin = async () => {
-    // dispatch(authActions.login());
-
     try {
       const user = await login(email, password);
       if (user) {
         dispatch(authActions.login());
-        // Navigate to the next screen
       }
     } catch (err) {
       setLoginError(error.message ? error.message : err.message);
